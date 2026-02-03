@@ -1,0 +1,16 @@
+[alias]
+    st = status -sb
+    ds = diff --staged
+    cp = cherry-pick
+    co = checkout
+    b = for-each-ref --sort=committerdate refs/remotes/ --format='%(HEAD)%(authorname) : %(refname:short)'
+[commit]
+    verbose = true
+[rebase]
+	autoStash = true
+[help]
+	autoCorrect = 1
+[includeIf "gitdir:~/softglitch/"]
+    path = ~/.gitconfig-softglitch
+[core]
+	excludesFile = ~/.gitignore_global
