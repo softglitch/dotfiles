@@ -1,11 +1,8 @@
--- local lspconfig = require("lspconfig")
 local util = require("lspconfig/util")
 
 local root = vim.fn.system("git rev-parse --show-toplevel")
 root = root:gsub("%s+$", "")
 local venv = vim.fn.system("pushd " .. root .. "/tests/.venv")
-    -- vim.fn.expand("~") .. "/robotframework-lsp/robocorp-python-ls-core/src/",
-    -- vim.fn.expand("~") .. "/robotframework-lsp/robotframework-ls/src/",
 venv = venv:gsub("%s+$", "")
 local pythonpath = {
     venv .. "/lib/python3.12/site-packages/",
@@ -47,7 +44,8 @@ vim.lsp.config('robotframework_ls', {
             },
             libraries = {
                 libdoc = {
-                    needsArgs = { "libraries.libtimefaker" },
+                    -- needsArgs = { "common.imclient", "terminals.py" },
+                    needsArgs = { "libraries.libtimefaker", "common.imclient", "common.libdcid", "terminals.py" },
                 },
             },
         },
@@ -59,17 +57,6 @@ vim.lsp.config('clangd', {
     cmd = { "clangd", "--background-index", "--suggest-missing-includes", "--clang-tidy", "--header-insertion=never", "--compile-commands-dir=" .. root .. "/builddir" },
     filetypes = { "h", "c", "cpp", "objc", "objcpp" },
     root_dir = util.root_pattern("compile_commands.json", ".git"),
-    -- settings = {
-    --     clangd = {
-    --         semanticHighlighting = true,
-    --         completion = {
-    --             filterAndSort = true,
-    --         },
-    --         diagnostics = {
-    --             disabled = { "clang-diagnostic-unused-parameter" },
-    --         },
-    --     },
-    -- },
 })
 
 
@@ -87,3 +74,20 @@ vim.lsp.config('xmlformatter', {
     filetypes = { "xml" },
 })
 
+
+vim.lsp.config('lua_ls', {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { "vim" },
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+            },
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})
