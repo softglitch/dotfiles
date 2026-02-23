@@ -21,7 +21,6 @@ vim.keymap.set("n", "<tab>", ":b#<cr>")
 -- robot shit
 vim.keymap.set("i", "<C-space>", "<space><space><space><space>")
 vim.keymap.set("n", "<leader>rj", ":RobotJump ")
-vim.keymap.set("n", "<leader>cc", ":CopilotChat<CR>")
 
 vim.keymap.set("n", "gt", ":RobotJump ", { desc = "Jumping to test" })
 vim.keymap.set("n", "grr", ":RobotRun<CR>")

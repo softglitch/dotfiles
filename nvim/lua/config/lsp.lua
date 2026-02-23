@@ -3,7 +3,7 @@ local util = require("lspconfig/util")
 
 local root = vim.fn.system("git rev-parse --show-toplevel")
 root = root:gsub("%s+$", "")
-local venv = vim.fn.system("pushd " .. root .. "/tests && pipenv --venv")
+local venv = vim.fn.system("pushd " .. root .. "/tests/.venv")
     -- vim.fn.expand("~") .. "/robotframework-lsp/robocorp-python-ls-core/src/",
     -- vim.fn.expand("~") .. "/robotframework-lsp/robotframework-ls/src/",
 venv = venv:gsub("%s+$", "")
@@ -47,8 +47,7 @@ vim.lsp.config('robotframework_ls', {
             },
             libraries = {
                 libdoc = {
-                    -- needsArgs = { "common.imclient", "terminals.py" },
-                    needsArgs = { "libraries.libtimefaker", "common.imclient", "common.libdcid", "terminals.py" },
+                    needsArgs = { "libraries.libtimefaker" },
                 },
             },
         },
@@ -87,51 +86,4 @@ vim.lsp.config('bashls', {
 vim.lsp.config('xmlformatter', {
     filetypes = { "xml" },
 })
-
---RobotCode LSP
--- vim.lsp.config('robotcode', {
---     root_markers = { ".git" },
---     filetypes = { "robot", "resource" },
---     -- root_markers = { ".robocop" },
---     -- cmd = { "robotcode", "language-server" },
-
---     settings = {
---         robotcode = {
---             analysis = {
---                 findUnusedReferences = true,
---                 diagnosticMode       = "openFilesOnly", -- or "workspace"
---                 progressMode         = "detailed",
---                 cache                = {
---                     saveLocation = "workspaceFolder",
---                     enabled = true,
---                 },
---             },
---             robocop ={
---                 enabled = true,
---                 configFile = root .. "/.robocop",
---             },
---             robot = {
---                 pythonPath = pythonpath,
---                 variables = {
---                     EXECDIR = root .. "/tests",
---                 },
---                 args = {
---                     "-A", root .. "/.lsp.resource",
---                 },
---                 -- you can add more later:
---                 -- outputDir = "./results",
---                 paths = { "robot" },
---             },
---         },
---     },
--- })
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = { "robot", "resource" },
---     callback = function(ev)
---         -- vim.lsp.set_log_level('debug')
---         vim.lsp.enable("robotcode", {
---             bufnr = ev.buf,
---         })
---     end,
--- })
 
